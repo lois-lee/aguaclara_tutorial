@@ -27,16 +27,14 @@ start_recording()
 #
 # Hint: It's rice and beans. Yum, string beans.
 
-favorite_food = '' # Your answer here
-
-print(favorite_food)
+f = 'rice and beans'
+print(f)
 
 # TODO 2: Calculate the volume of a 7 x 7 x 5 cube using Python math
 # operations.
 
-volume = 0 # Your answer here
-
-print(volume)
+vol = 7 ** 2 * 5
+print(vol)
 
 # TODO 3: Pop the last item from this list, append 'filtration' to it,
 # then change the second item to '1 LPS'. Don't change the original
@@ -47,7 +45,9 @@ print(volume)
 
 hydraulic_processes = ['flocculation', 'sedimentation', 'stirring']
 
-# Your answer here
+hydraulic_processes.pop()
+hydraulic_processes.append('filtration')
+hydraulic_processes[1] = '1 LPS'
 
 print(hydraulic_processes)
 
@@ -56,7 +56,7 @@ print(hydraulic_processes)
 
 analogy = {'knowledge' : 'power', 'France': 'ham'}
 
-# Your answer here
+analogy['France'] = 'bacon'
 
 print(analogy['knowledge'] + ' ' + analogy['France'])
 
@@ -69,15 +69,19 @@ print(analogy['knowledge'] + ' ' + analogy['France'])
 
 # Don't try to figure these variables out! Just write a conditional
 # that determines if the above conditions are met. 
-a = True and False or not False or False
-b = True and not False or True and False
-c = False or not False and True or True
 
-does_it_work = 'maybe'
+a = True 
+b = True 
+c = False 
 
-# Your answer here
+passes = 'not yet determined'
 
-print(does_it_work)
+if((a or b) and not c):
+    passes = 'yes'
+else:
+    passes = 'no'
+
+print(passes)
 
 # TODO 6: Write a for loop that multiplies x by each integer from 1 to
 # 30.
@@ -87,7 +91,8 @@ print(does_it_work)
 
 x = 1
 
-# Your answer here
+for i in range(1, 30):
+    x *= i
 
 print(x)
 
@@ -99,7 +104,11 @@ print(x)
 
 x = 4
 
-# Your answer here
+def squared(number):
+    return number **2
+
+for i in range(6):
+    x = squared(x)
 
 print(x)
 
