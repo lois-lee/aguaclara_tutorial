@@ -32,7 +32,14 @@ These questions are meant to test what you've learned from the Python Basics tut
 1. Write a conditional statement with 3 conditions: when x is 10, when x is 1, and when x is anything other than 1 or 10. For each condition, have your code print what the value is or isn't.
 
 <!--- Fill you answer here. --->
-
+```Python
+def new_function(x):
+  if x == 10:
+    print('x is 10')
+  elif x == 1:
+    print('x is 1')
+  print ('x is '+ str(x))
+  ```
 
 
 
@@ -40,28 +47,46 @@ These questions are meant to test what you've learned from the Python Basics tut
 
 <!--- Fill you answer here. --->
 
+```python
+def add_i(j):
+  j = 0
+  for i in range(0,20):
+    j += i
+    print(j)
 
 
-
-
+```
 
 
 
 
 3. Using the NumPy package and `unit_registry`, calculate the value of sin(4) meters, and use the sigfig function from the unit unit_registry module in aide_design to get your answer to 2 sig-figs. *(Hint: You will need to import these packages. Remember how to do that?)*
+```python
+from aide_design.play import*
 
-<!--- Fill you answer here. --->
-
+x = np.sin(4)
+rounded_x = np.around(x, decimals=2)
+print(rounded_x)
+```
 
 
 4. Create a `list` of length 5, and verify the length of your list. Once you've done that, turn your `list` into an `array` and apply units of meters to it. After that, create a 5x5 `array`, extract the middle row and middle column. Verify the size of your 2D `array` and apply units of liters to it.
 
-<!--- Fill you answer here. --->
+```python
+myList = [0, 1, 2, 3, 6]
+len(myList)
 
+myArray = np.array(myList)
+myArrayUnits = myArray * u.m
 
+my2DArray = np.array([[1 ,2, 3, 4, 5], [4, 5, 6, 7, 8], [7, 8, 9, 10, 11], [1, 2, 3, 4, 5], [0, 1, 2, 3, 4]])
+my2DArray[:,2]
 
+my2DArray[2,:]
 
-
+np.size(my2DArray)
+my2DArrayu = my2DArray * u.L
+```
 
 
 
@@ -78,15 +103,59 @@ $$ D = \frac{k_BT}{6\pi\eta r} $$
 from scipy.constants import Boltzmann as kB_sc # I've imported the unitless value for kB from SciPy
 
 kB = kB_sc * u.joule / u.kelvin # I've given kB units for you in J/K; you can use the kB variable to give you Boltzmann's constant with units
+import math
 
-# Write your code here
+def stokes_einstein(T, eta, r):
+  T_new = T.to(u.kelvin)
+  eta_unit = eta.to(u.kilogram/ (u.meter * u.second))
+  r_new = r.to(u.meter)
+  kB = kB_sc * u.joule / u.kelvin
+  kB_base = kB.to_base_units()
+  D = (kB_base*T_new)/(6* np.pi * eta_unit * r_new)
+  return D.to_base_units()
+
+stokes_einstein(0 * u.celsius,  5 * u.kilogram/ (u.meter * u.second), 2 * u.meter)
 
 ```
 
 6. You have a pipe with a radius of 0.2 m with water flowing in it at 2 m<sup>3</sup>/s. You want to see how the Reynolds Number changes as viscosity changes due to a change in temperature from 0 to 200<sup>o</sup>C. Create a plot of Reynolds Number against Temperature in Kelvin to show a relationship. Make sure your plot has a title, labeled axes, and axes grid. You can use functions from `physchem` like `pc.re_pipe` and `pc.viscosity_kinematic`. *(Hint: Make an array of temperatures to input into the `pc.viscosity_kinematic` function)*. Make sure to save you plot to your images folder in your personal repository, and display it below using `plt.show()` and a relative file path to the image.
 
-<!--- Fill you answer here. --->
+```python
+temp = []
+for k in range (0,201):
+  temp.append(k)
 
+#Convert temperature in Celsius to Kelvin
+tempArray = (np.array(temp) + 273) * u.kelvin
+tempArray
+
+viscosity = []
+for i in range(len(tempArray)):
+  calc_visc = pc.viscosity_kinematic(tempArray[i])
+  viscosity.append(calc_visc)
+viscosity
+
+re_number = []
+q = 2 * (u.meter ** 3 / u.s) #Flow rate in m^3/s
+d = 0.2 * 2 * u.meter #Pipe diameter in m
+
+for j in range(len(viscosity)):
+  re = pc.re_pipe(q,d,viscosity[j])
+  re_number.append(re)
+
+re_number
+plt.plot(tempArray, re_number, '.', label = 'Reynolds Number')
+plt.xlabel('Temperature (Kelvin)')
+plt.ylabel('Reynolds Number')
+plt.title('Relationship of Reynolds Number with Temperature')
+plt.minorticks_on()
+plt.grid(which = 'major')
+plt.grid(which = 'minor')
+plt.legend(loc = 'lower right', ncol = 1)
+plt.tight_layout()
+plt.savefig('./Images/ReynoldsNumber.png')
+plt.show()
+```
 
 # GitHub Basics
 Congratulations! You've completed this interactive tutorial. Now all you need to do is save your work and put it on your personal repository. Toggle the Git Tab using `Cntrl + Shift + 9`.
