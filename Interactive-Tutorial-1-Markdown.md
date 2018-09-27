@@ -60,6 +60,7 @@ Insert the Cornell seal image with:
   2. A URL (https://raw.githubusercontent.com/AguaClara/aguaclara_tutorial/master/Images/Cornell_University_seal.svg.png)
 
 <!--- Write your answer here. --->
+1. ![](`/Images/Cornell_University_seal.png`)
 
 ## Code Formatting
 
